@@ -19,9 +19,8 @@ jobs:
 
       - name: Setup ZED CLI
         run: |
-          curl -L https://github.com/authzed/zed/releases/latest/download/zed_linux_amd64 -o zed
-          chmod +x zed
-          sudo mv zed /usr/local/bin/
+          sudo apt update
+          sudo apt install -y zed
 
       - name: Validate schema
         run: zed validate
@@ -36,9 +35,8 @@ jobs:
 
       - name: Setup ZED CLI
         run: |
-          curl -L https://github.com/authzed/zed/releases/latest/download/zed_linux_amd64 -o zed
-          chmod +x zed
-          sudo mv zed /usr/local/bin/
+          sudo apt update
+          sudo apt install -y zed
 
       - name: Compile schema
         run: zed preview schema compile root.zed > compiled.zed

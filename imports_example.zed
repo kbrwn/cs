@@ -1,0 +1,14 @@
+// An import keyword followed by a quoted relative filepath
+import "./one.zed"
+
+// Note that a bare filename works as a relative path
+import "two.zed"
+
+// The imports are included by the compilation process, which means that
+// they can be referenced by other definitions
+definition resource {
+  relation user: user
+  relation organization: organization
+  
+  permission view = user + organization
+}

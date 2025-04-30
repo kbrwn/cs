@@ -1,0 +1,10 @@
+definition user {}
+
+definition organization {}
+
+definition resource {
+	relation user: user
+	permission view = user
+	relation organization: organization
+	permission manage = organization
+}

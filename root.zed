@@ -1,0 +1,13 @@
+import "./subjects.zed"
+
+partial view_partial {
+  relation user: user
+  permission view = user
+}
+
+definition resource {
+  ...view_partial
+
+  relation organization: organization
+  permission manage = organization
+}

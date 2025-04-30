@@ -1,0 +1,51 @@
+name: Schema Validation and Deployment
+
+on:
+  pull_request:
+    paths:
+      - '**.zed'
+  push:
+    branches:
+      - main
+    paths:
+      - '**.zed'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup ZED CLI
+        run: |
+          curl -L https://github.com/authzed/zed/releases/latest/download/zed_linux_amd64 -o zed
+          chmod +x zed
+          sudo mv zed /usr/local/bin/
+
+      - name: Validate schema
+        run: zed validate
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup ZED CLI
+        run: |
+          curl -L https://github.com/authzed/zed/releases/latest/download/zed_linux_amd64 -o zed
+          chmod +x zed
+          sudo mv zed /usr/local/bin/
+
+      - name: Compile schema
+        run: zed preview schema compile root.zed > compiled.zed
+
+      - name: Write schema to SpiceDB
+        run: |
+          zed schema write \
+            --endpoint=${{ secrets.SPICEDB_ENDPOINT }} \
+            --token=${{ secrets.SPICEDB_TOKEN }} \
+            --schema-file=compiled.zed

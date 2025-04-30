@@ -1,0 +1,16 @@
+partial view_partial {
+    relation viewer: user
+    permission view = viewer
+}
+ 
+partial edit_partial {
+    relation editor: user
+    permission edit = editor
+}
+ 
+definition resource {
+    ...view_partial
+    ...edit_partial
+}
+
+definition user {}

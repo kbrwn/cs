@@ -35,7 +35,6 @@ jobs:
 
       - name: Setup ZED CLI
         run: |
-          sudo apt update
           sudo apt install -y zed
 
       - name: Compile schema

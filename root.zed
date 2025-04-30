@@ -12,4 +12,3 @@ definition resource {
   permission manage = organization
 }
 
-definition user {}

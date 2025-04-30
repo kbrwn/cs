@@ -11,3 +11,5 @@ definition resource {
   relation organization: organization
   permission manage = organization
 }
+
+definition user {}
